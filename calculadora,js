@@ -1,36 +1,77 @@
+/*
+En javascript, en lugar de def, utilizamos la palabra function para función. 
+Toda función debe encerrar los valores entre paréntesis (), seguido de llaves {} que indican 
+el bloque de código a ejecutar. 
+*/
+
 function sumar(a, b) {
-  return a + b;
-} 
+    return a + b;
+}
+
 function restar(a, b) {
-  return a - b;
+    return a - b;
 }
+
 function multiplicar(a, b) {
-  return a * b;
+    return a * b;
 }
+
 function dividir(a, b) {
-  if (b === 0) {
-        return "Error: no se puede dividir por cero";
+    if (b === 0) {
+        return "Error: no se puede dividir por cero"; //En javascript no hay error de división por cero, pero conviene evitarlo. 
     }
     return a / b;
 }
+
 function modulo(a, b) {
-  if (b === 0) {
-        return "Error: no se puede dividir por cero";
-    }
     return a % b;
 }
+
 function potencia(a, b) {
-  return a ** b;
+    return a ** b;
 }
-function raiz_n_esima(a, b) {
+
+/*
+Raiz, significa encontrar un número, que al multiplicarlo n veces nos retorne el valor dentro de la raiz. 
+Por regla general, en matemática, una multiplicación par siempre será positiva, por ejemplo: -2 * -3 = 6, -1 * -20 = 20, etc...
+Pero no se cumnple lo mismo para mutiplicaciones impares, ejemplo: -1 * -2 * -3 = -6, -2*-2*-2 = -8. 
+Así, podemos calcular la raiz cúbica de -8, que es igual a -2. Pero no podemos hacer lo mismo con la raiz cuadrada de -4, porque no existe un número que
+multiplicado 2 veces por sí mismo de -4. 
+
+En resumen: Es por eso que en la condición, a debe ser menor a 0 y b debe ser par. 
+*/
+
+function raiz(a, b) {
     // Si es una raíz par y el número es negativo → error matemático
     if (a < 0 && b % 2 === 0) {
         return "Error: no se puede calcular raíz par de un número negativo";
     }
     return a ** (1 / b);
 }
+/*
+En este bloque simularemos una entrada. La idea es no reescribir constantemente el programa. 
+Ya que no existe input en js, lo que haremos es editar el valor que queremos (por ejemplo opcion = 1 para sumar), 
+junto con los dos valores a y b
+*/
 
-function menu() {
+function ingresar_valor() {
+    const a = 3;
+    const b = 4;
+    const opcion = 4; // Puedes cambiarlo para probar cada operación
+    return { a, b, opcion };  
+}
+
+/*
+Al igual que en python, retornaremos los valores que queremos utilizar en otra parte de nuestro programa.
+const lo que hace es devolver un objeto con nuestros valores de este tipo
+{a:3
+ b:4
+ opcion:4
+}
+Similar a como se declaran diccionarios en python... lo veremos en POO. :)
+*/
+
+function menu(a, b, opcion) {
     console.log("=== Menú de inicio ===");
     console.log("1. Sumar");
     console.log("2. Restar");
@@ -41,62 +82,43 @@ function menu() {
     console.log("7. Raíz cuadrada");
     console.log("8. Raíz cúbica");
     console.log("9. Salir");
+
+    switch (opcion) {
+        case 1:
+            console.log("El resultado de la suma es:", sumar(a, b));
+            break; //Para que no se ejecute el siguiente case. 
+        case 2:
+            console.log("El resultado de la resta es:", restar(a, b));
+            break;
+        case 3:
+            console.log("El resultado de la multiplicación es:", multiplicar(a, b));
+            break;
+        case 4:
+            console.log("El resultado de la división es:", dividir(a, b));
+            break;
+        case 5:
+            console.log("El resultado del módulo es:", modulo(a, b));
+            break;
+        case 6:
+            console.log("El resultado de la potencia es:", potencia(a, b));
+            break;
+        case 7:
+            console.log("El resultado de la raíz cuadrada es:", raiz(a, 2));
+            break;
+        case 8:
+            console.log("El resultado de la raíz cúbica es:", raiz(a, 3));
+            break;
+        case 9:
+            console.log("Saliendo del programa...");
+            break;
+        default:
+            console.log("Opción no válida");
+    }
 }
 
-function calculadora() {
-      while (true) 
-        console.log(menu());
-        opcion = 2
-
-        switch (opcion) { 
-            case '1' | '2' | '3' | '4' | '5' | '6':
-                try:
-                    a = float(input("Ingrese el primer número: "))
-                    b = float(input("Ingrese el segundo número: "))
-                except ValueError:
-                    print("❌ Error: entrada no válida.")
-                    continue
-        }
-
-                switch (opcion) {
-                    case 1:
-                       resultado = sumar(a, b)
-                    case 2: 
-                       resultado = restar(a, b)
-                    case 3: 
-                       resultado = multiplicar(a, b)
-                    case 4: 
-                       resultado = dividir(a, b)
-                    case 5: 
-                       resultado = modulo(a, b)
-                    case 6: 
-                       resultado = potencia(a, b)
-
-            case '7':  # Raíz cuadrada
-                try:
-                    a = float(input("Ingrese el número: "))
-                    resultado = raiz_cuadrada(a)
-                except ValueError:
-                    resultado = "❌ Error: entrada no válida."
-
-            case '8':  # Raíz n-ésima
-                try:
-                    a = float(input("Ingrese el número: "))
-                    n = float(input("Ingrese el valor de n (orden de la raíz): "))
-                    resultado = raiz_n_esima(a, n)
-                except ValueError:
-                    resultado = "❌ Error: entrada no válida."
-
-            case '9':
-                print("👋 ¡Gracias por usar la Calculadora PRO! Hasta luego.")
-                break
-
-            case _:
-                print("⚠️ Opción no válida. Intente nuevamente.")
-                continue
-
-        print(f"✅ Resultado: {formatear_resultado(resultado)}")
+function main() {
+    const { a, b, opcion } = ingresar_valor(); //Asignamos variables donde guardar los valores que retorne ingresar_valor(). Luego esos valores los usaremos en menu.
+    menu(a, b, opcion);
 }
 
-console.log(menu())
-console.log(raiz_n_esima(2,2));
+main();
